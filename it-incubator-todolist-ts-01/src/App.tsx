@@ -12,27 +12,27 @@ export type  TaskType = {
 
 const App = () => {
 
-    const TodoListTitle = {title1:"What to learn",
-        title2:"What to buy"}
+    const TodoListTitle:string = "What to learn"
 
-    const tasks_1:Array<TaskType> = [
+
+    const tasks:Array<TaskType> = [
         {id:1,title:"HTML & CSS",isDone:true},
         {id:2,title:"JS",isDone:true},
-        {id:3,title:"React",isDone:false}
+        {id:3,title:"React",isDone:true},
+        {id:4,title:"ReactRedux",isDone:false}
     ]
 
     // const TodoListTitle_2 = "What to buy"
-    const tasks_2:Array<TaskType> = [
-        {id:4,title:"Cola",isDone:false},
-        {id:5,title:"Chicken",isDone:true},
-        {id:6,title:"Beer",isDone:true}
-    ]
+    // const tasks_2:Array<TaskType> = [
+    //     {id:4,title:"Cola",isDone:false},
+    //     {id:5,title:"Chicken",isDone:true},
+    //     {id:6,title:"Beer",isDone:true}
+    // ]
 
 
     return (
         <div className="App">
-            <TodoList title={TodoListTitle.title1} tasks={tasks_1}/>
-            <TodoList title={TodoListTitle.title2} tasks={tasks_2}/>
+            <TodoList title={TodoListTitle} tasks={tasks}/>
         </div>
     );
 }
