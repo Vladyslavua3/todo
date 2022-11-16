@@ -43,7 +43,7 @@ const TodoList = (props: TodoListPropsType) => {
                 {props.tasks.map(getTasksListItem)}
             </ul>
             <div>
-                <button onClick={() => props.changeTodoListFilter("all")}>All</button>
+                <button onClick={() => props.changeTodoListFilter("all")}>all</button>
                 <button onClick={() => props.changeTodoListFilter("active")}>Active</button>
                 <button onClick={() => props.changeTodoListFilter("completed")}>Completed</button>
             </div>
