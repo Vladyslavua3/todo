@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FilterValuesType, TaskType} from "../App";
 
 
 type TodoListPropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask: (taskId: number) => void
+    removeTask: (taskId: string) => void
     changeTodoListFilter: (nextFilterValue: FilterValuesType) => void
+    addTask:(title:string) => void
 }
 
 
@@ -22,7 +23,12 @@ const TodoList = (props: TodoListPropsType) => {
     // })
 
 
+    const[newTitle,setNewTitle] = useState('');
+
+
+
     const getTasksListItem = (task: TaskType) => {
+
         return (
             <li key={task.id}><input type="checkbox" checked={task.isDone}/>
                 <span>{task.title}</span>
@@ -36,8 +42,14 @@ const TodoList = (props: TodoListPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input/>
-                <button>+</button>
+                <input value={newTitle} onChange={(e) => {
+                   setNewTitle(e.currentTarget.value)
+                }}/>
+                <button onClick={() => {props.addTask(newTitle)
+                setNewTitle('')
+                }}>
+                    +
+                </button>
             </div>
             <ul>
                 {props.tasks.map(getTasksListItem)}
