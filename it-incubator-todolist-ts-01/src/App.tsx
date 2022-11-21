@@ -33,9 +33,9 @@ const App = () => {
     }
 
     const addTask = (title:string) => {
-        let newTask = {id:v1(),title:title,isDone:false}
-        let newTasks = [newTask,...tasks]
-        setTasks(newTasks)
+        // let newTask:TaskType = {id:v1(),title,isDone:false}
+        // let newTasks = [newTask,...tasks]
+        setTasks([{id:v1(),title,isDone:false},...tasks])
     }
 
 
@@ -44,16 +44,25 @@ const App = () => {
     }
 
 
-    let tasksForRender:Array<TaskType> = [];
-    if(filter === "all"){
-        tasksForRender = tasks
-    }else if(filter === "active"){
-        tasksForRender = tasks.filter(task => task.isDone === false)
-    }else if(filter === "completed"){
-        tasksForRender = tasks.filter(task => task.isDone === true)
+
+
+    const getFilteredTasks = (tasks:Array<TaskType>,filter:FilterValuesType):Array<TaskType> => {
+        // if(filter === "all"){
+        //     return  tasks
+        // }else if(filter === "active"){
+        //     return  tasks.filter(task => task.isDone === false)
+        // }else if(filter === "completed"){
+        //     return  tasks.filter(task => task.isDone === true)
+        // }
+        switch (filter){
+            case "completed":
+               return  tasks.filter(task => task.isDone)
+            case "active":
+                return  tasks.filter(task => !task.isDone)
+            default:
+                return tasks
+        }
     }
-
-
 
     // const TodoListTitle_2 = "What to buy"
     // const tasks_2:Array<TaskType> = [
@@ -61,12 +70,12 @@ const App = () => {
     //     {id:5,title:"Chicken",isDone:true},
     //     {id:6,title:"Beer",isDone:true}
     // ]
-
+const filteredTasks:Array<TaskType> = getFilteredTasks(tasks,filter)
 
     return (
         <div className="App">
             <TodoList
-                tasks={tasksForRender}
+                tasks={filteredTasks}
                 title={TodoListTitle}
                 removeTask={removeTask}
                 changeTodoListFilter={changeTodoListFilter}
