@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState,KeyboardEvent} from 'react';
+import React, {ChangeEvent, useState, KeyboardEvent} from 'react';
 import {FilterValuesType, TaskType} from "../App";
 
 
@@ -7,7 +7,8 @@ type TodoListPropsType = {
     tasks: Array<TaskType>
     removeTask: (taskId: string) => void
     changeTodoListFilter: (nextFilterValue: FilterValuesType) => void
-    addTask:(title:string) => void
+    changeTaskStatus: (taskId: string,isDone:boolean) => void
+    addTask: (title: string) => void
 }
 
 
@@ -23,15 +24,19 @@ const TodoList = (props: TodoListPropsType) => {
     // })
 
 
-    const[newTitle,setNewTitle] = useState('');
+    const [newTitle, setNewTitle] = useState('');
 
     const getTasksListItem = (task: TaskType) => {
 
-    const removeTask = () => props.removeTask(task.id)
+        const removeTask = () => props.removeTask(task.id)
+        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id,e.currentTarget.checked)
         return (
-            <li key={task.id}><input type="checkbox" checked={task.isDone}/>
+            <li key={task.id}>
+                <input type="checkbox"
+                       checked={task.isDone}
+                       onChange={changeTaskStatus}/>
                 <span>{task.title}</span>
-                <button onClick={removeTask}>X</button>
+                <button onClick={removeTask}>x</button>
             </li>
         )
     }
@@ -42,19 +47,19 @@ const TodoList = (props: TodoListPropsType) => {
         setNewTitle('')
     }
 
-    const setLocalTitle = (e:ChangeEvent<HTMLInputElement>) => {
+    const setLocalTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setNewTitle(e.currentTarget.value)
     }
 
-    const onEnterTask = (e:KeyboardEvent<HTMLInputElement>) => {
-        if(e.key === "Enter")  {
+    const onEnterTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
             addTask()
         }
     }
+    //
+    // const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {props.changeTaskStatus}
 
-
-
-    const onClickHandlerCreator = (filter:FilterValuesType) => {
+    const onClickHandlerCreator = (filter: FilterValuesType) => {
         return () => props.changeTodoListFilter(filter)
     }
 
@@ -67,7 +72,7 @@ const TodoList = (props: TodoListPropsType) => {
                     value={newTitle}
                     onKeyDown={onEnterTask}
                     onChange={setLocalTitle}
-               />
+                />
                 <button onClick={addTask}>+</button>
             </div>
             <ul>
