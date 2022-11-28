@@ -33,22 +33,10 @@ const App = () => {
     }
 
     const addTask = (title:string) => {
-        // let newTask:TaskType = {id:v1(),title,isDone:false}
-        // let newTasks = [newTask,...tasks]
         setTasks([{id:v1(),title,isDone:false},...tasks])
     }
 
     const changeTaskStatus = (taskId:string,isDone:boolean) => {
-        // let task = tasks.find(t => t.id === taskId);
-        // if(task) {
-        //     task.isDone = isDone;
-        // }
-        // setTasks(tasks)
-        // setTasks(tasks.map((task)=> {
-        //     if (task.id === taskId) return {...task, isDone: !task.isDone}
-        //     else return task
-        // }))
-
         setTasks(tasks.map(t => t.id === taskId ?{...t, isDone: isDone}: t))
     }
 
@@ -60,13 +48,6 @@ const App = () => {
 
 
     const getFilteredTasks = (tasks:Array<TaskType>,filter:FilterValuesType):Array<TaskType> => {
-        // if(filter === "all"){
-        //     return  tasks
-        // }else if(filter === "active"){
-        //     return  tasks.filter(task => task.isDone === false)
-        // }else if(filter === "completed"){
-        //     return  tasks.filter(task => task.isDone === true)
-        // }
         switch (filter){
             case "completed":
                return  tasks.filter(task => task.isDone)
@@ -77,12 +58,6 @@ const App = () => {
         }
     }
 
-    // const TodoListTitle_2 = "What to buy"
-    // const tasks_2:Array<TaskType> = [
-    //     {id:4,title:"Cola",isDone:false},
-    //     {id:5,title:"Chicken",isDone:true},
-    //     {id:6,title:"Beer",isDone:true}
-    // ]
 const filteredTasks:Array<TaskType> = getFilteredTasks(tasks,filter)
 
     return (
@@ -93,6 +68,7 @@ const filteredTasks:Array<TaskType> = getFilteredTasks(tasks,filter)
                 removeTask={removeTask}
                 changeTodoListFilter={changeTodoListFilter}
                 addTask={addTask}
+                filter={filter}
                 changeTaskStatus={changeTaskStatus}
             />
         </div>

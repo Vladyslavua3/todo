@@ -6,3 +6,17 @@
 .App > div {
   margin-right: 50px;
 }
+
+.btn-active {
+  background-color: darkolivegreen;
+  color: whitesmoke;
+}
+
+.task-done{
+  font-weight: bold;
+  color: red;
+}
+.input-error{
+  border: 2px solid red;
+  outline: none;
+}
