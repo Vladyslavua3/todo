@@ -3,13 +3,15 @@ import {FilterValuesType, TaskType} from "../App";
 
 
 type TodoListPropsType = {
+    id:string
     title: string
     tasks: Array<TaskType>
     filter: FilterValuesType
-    removeTask: (taskId: string) => void
-    changeTodoListFilter: (nextFilterValue: FilterValuesType) => void
-    changeTaskStatus: (taskId: string, isDone: boolean) => void
-    addTask: (title: string) => void
+    removeTask: (taskId: string,todoListId:string) => void
+    changeTodoListFilter: (nextFilterValue: FilterValuesType,toDoId:string) => void
+    changeTaskStatus: (taskId: string, isDone: boolean,todoListId:string) => void
+    addTask: (title: string,todoListId:string) => void
+    removeToDoList:(todoListId:string) => void
 }
 
 
@@ -20,8 +22,8 @@ const TodoList = (props: TodoListPropsType) => {
 
     const getTasksListItem = (task: TaskType) => {
 
-        const removeTask = () => props.removeTask(task.id)
-        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked)
+        const removeTask = () => props.removeTask(task.id,props.id)
+        const changeTaskStatus = (e: ChangeEvent<HTMLInputElement>) => props.changeTaskStatus(task.id, e.currentTarget.checked,props.id)
         return (
             <li key={task.id}>
                 <input type="checkbox"
@@ -38,7 +40,7 @@ const TodoList = (props: TodoListPropsType) => {
     const addTask = () => {
         const trimmedTittle = newTitle.trim()
         if (trimmedTittle) {
-            props.addTask(trimmedTittle)
+            props.addTask(trimmedTittle,props.id)
         }else {setError(true)}
         setNewTitle('')
     }
@@ -55,13 +57,17 @@ const TodoList = (props: TodoListPropsType) => {
     }
 
     const onClickHandlerCreator = (filter: FilterValuesType) => {
-        return () => props.changeTodoListFilter(filter)
+        return () => props.changeTodoListFilter(filter,props.id)
+    }
+
+    const removeToDoList = () => {
+         props.removeToDoList(props.id)
     }
 
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h3>{props.title} <button onClick={removeToDoList}>x</button></h3>
             <div>
                 <input
                     value={newTitle}
